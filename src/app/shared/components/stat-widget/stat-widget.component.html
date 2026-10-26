@@ -1,0 +1,34 @@
+<div
+  class="stat-card"
+  [class.clickable]="isClickable"
+  [class.border-primary]="accentColor === 'primary'"
+  [class.border-secondary]="accentColor === 'secondary'"
+  [class.border-success]="accentColor === 'success'"
+  [class.border-warning]="accentColor === 'warning'"
+  [class.border-danger]="accentColor === 'danger'"
+  role="region"
+  [attr.aria-label]="'Métrica: ' + title + ', valor: ' + value"
+  [attr.tabindex]="isClickable ? 0 : -1"
+  (click)="onTriggerClick()"
+  (keydown.enter)="onTriggerClick()">
+
+  <div class="stat-header">
+    <span class="stat-title">{{ title }}</span>
+    <span class="stat-icon" aria-hidden="true">{{ iconSymbol }}</span>
+  </div>
+
+  <div class="stat-value-row">
+    <span class="stat-value">{{ value }}</span>
+  </div>
+
+  <div class="stat-footer">
+    <span class="stat-trend" [ngClass]="trendClass">
+      <span class="trend-badge">{{ trendArrow }}{{ trendPercentage }}%</span>
+    </span>
+    <span class="trend-period">{{ trendPeriod }}</span>
+  </div>
+
+  <div *ngIf="subtitle" class="stat-subtitle">
+    {{ subtitle }}
+  </div>
+</div>

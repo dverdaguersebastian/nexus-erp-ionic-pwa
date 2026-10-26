@@ -1,0 +1,137 @@
+<div class="table-container" role="region" [attr.aria-label]="tableTitle">
+  <!-- Barra de Filtros y Herramientas -->
+  <div class="table-toolbar">
+    <div class="toolbar-search" *ngIf="showSearch">
+      <ion-searchbar
+        [formControl]="searchControl"
+        placeholder="Buscar en registros..."
+        debounce="0"
+        aria-label="Filtrar registros en la tabla"
+        animated="true">
+      </ion-searchbar>
+    </div>
+
+    <div class="toolbar-actions">
+      <!-- Selector de Estado -->
+      <div class="status-filter" *ngIf="showStatusFilter && statusFilterOptions.length > 0">
+        <label for="status-select" class="filter-label">Estado:</label>
+        <select
+          id="status-select"
+          class="accessible-select"
+          (change)="onStatusChange($event)"
+          aria-label="Filtrar por estado">
+          <option value="ALL">Todos los estados</option>
+          <option *ngFor="let opt of statusFilterOptions" [value]="opt">{{ opt }}</option>
+        </select>
+      </div>
+
+      <div class="results-counter" aria-live="polite">
+        <span>{{ filteredData().length }} registros encontrados</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vista Tabla (Desktop / Tablet) -->
+  <div class="table-responsive">
+    <table class="nexus-table" role="table" [attr.aria-label]="tableTitle">
+      <thead role="rowgroup">
+        <tr role="row">
+          <th
+            *ngFor="let col of columns"
+            role="columnheader"
+            scope="col"
+            [class.sortable]="col.sortable"
+            [attr.aria-sort]="sortColumn() === col.key ? (sortDirection() === 'asc' ? 'ascending' : 'descending') : 'none'"
+            (click)="onSort(col.key, col.sortable)"
+            (keydown.enter)="onSort(col.key, col.sortable)"
+            [attr.tabindex]="col.sortable ? 0 : -1">
+            <div class="th-content">
+              <span>{{ col.label }}</span>
+              <span class="sort-indicator" *ngIf="col.sortable">
+                <span *ngIf="sortColumn() === col.key && sortDirection() === 'asc'" aria-hidden="true">▲</span>
+                <span *ngIf="sortColumn() === col.key && sortDirection() === 'desc'" aria-hidden="true">▼</span>
+                <span *ngIf="sortColumn() !== col.key" class="sort-neutral" aria-hidden="true">⇅</span>
+              </span>
+            </div>
+          </th>
+          <th *ngIf="actions.length > 0" scope="col" role="columnheader">Acciones</th>
+        </tr>
+      </thead>
+      <tbody role="rowgroup">
+        <tr
+          *ngFor="let row of paginatedData()"
+          role="row"
+          class="data-row"
+          tabindex="0"
+          (click)="onRowSelect(row)"
+          (keydown.enter)="onRowSelect(row)"
+          [attr.aria-label]="'Fila ' + row[columns[0].key]">
+          
+          <td *ngFor="let col of columns" role="cell" [attr.data-label]="col.label">
+            <ng-container [ngSwitch]="col.type">
+              <span *ngSwitchCase="'badge'">
+                <ion-badge [color]="getBadgeColor(col, row[col.key])">
+                  {{ formatCellValue(col, row) }}
+                </ion-badge>
+              </span>
+              <span *ngSwitchDefault>
+                {{ formatCellValue(col, row) }}
+              </span>
+            </ng-container>
+          </td>
+
+          <!-- Acciones de Fila -->
+          <td *ngIf="actions.length > 0" role="cell" data-label="Acciones" class="actions-cell">
+            <div class="action-buttons-group">
+              <button
+                *ngFor="let act of actions"
+                type="button"
+                class="nexus-btn-action"
+                [class.btn-danger]="act.color === 'danger'"
+                [attr.aria-label]="(act.ariaLabel || act.label) + ' en fila ' + row[columns[0].key]"
+                (click)="onActionTrigger(act.id, row, $event)">
+                {{ act.label }}
+              </button>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Estado Vacío -->
+        <tr *ngIf="paginatedData().length === 0">
+          <td [attr.colspan]="columns.length + (actions.length > 0 ? 1 : 0)" class="empty-state-cell">
+            <div class="empty-state">
+              <p>No se encontraron registros coincidentes con los filtros aplicados.</p>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <div class="table-pagination" *ngIf="totalPages() > 1" role="navigation" aria-label="Paginación de la tabla">
+    <div class="pagination-info">
+      Página <strong>{{ currentPage() }}</strong> de <strong>{{ totalPages() }}</strong>
+    </div>
+
+    <div class="pagination-controls">
+      <button
+        type="button"
+        class="pagination-btn"
+        [disabled]="currentPage() === 1"
+        (click)="goToPage(currentPage() - 1)"
+        aria-label="Ir a la página anterior">
+        &laquo; Anterior
+      </button>
+
+      <button
+        type="button"
+        class="pagination-btn"
+        [disabled]="currentPage() === totalPages()"
+        (click)="goToPage(currentPage() + 1)"
+        aria-label="Ir a la página siguiente">
+        Siguiente &raquo;
+      </button>
+    </div>
+  </div>
+</div>
