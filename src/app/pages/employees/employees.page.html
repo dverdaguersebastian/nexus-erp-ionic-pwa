@@ -1,0 +1,67 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Gestión de Empleados y Plantilla</ion-title>
+    <ion-buttons slot="end">
+      <div class="role-badge" [class.admin]="authService.isAdmin()">
+        {{ authService.isAdmin() ? 'Modo: Administrador' : 'Modo: Usuario Estándar' }}
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="employees-content" [fullscreen]="true">
+  <div class="employees-wrapper" role="main" id="main-content">
+    
+    <!-- Encabezado de Sección y Acciones de Exportación -->
+    <div class="section-bar">
+      <div>
+        <h1 class="page-title">Directorio Oficial de Personal</h1>
+        <p class="page-subtitle">Instancia del componente reutilizable <code>app-advanced-data-table</code> conectado a endpoints SQL relacionales.</p>
+      </div>
+
+      <div class="btn-group">
+        <button type="button" class="action-btn pdf" (click)="exportPdf()" aria-label="Exportar empleados a PDF">
+          📄 Exportar PDF
+        </button>
+        <button type="button" class="action-btn csv" (click)="exportCsv()" aria-label="Exportar empleados a CSV">
+          📊 Exportar CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast de Notificaciones -->
+    <ion-toast
+      [isOpen]="!!toastMessage()"
+      [message]="toastMessage() || ''"
+      [duration]="3500"
+      (didDismiss)="toastMessage.set(null)"
+      position="bottom"
+      color="dark">
+    </ion-toast>
+
+    <!-- Estado de Carga -->
+    <div *ngIf="isLoading()" class="loading-state" role="status">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Cargando registros desde la base de datos SQL...</p>
+    </div>
+
+    <!-- Componente Agnóstico Reutilizable (RA 3) -->
+    <div *ngIf="!isLoading()">
+      <app-advanced-data-table
+        [columns]="columns"
+        [data]="employees()"
+        [pageSize]="5"
+        tableTitle="Tabla de Empleados de NexusERP"
+        [statusFilterOptions]="['ACTIVO', 'EN_VACACIONES', 'BAJA_TEMPORAL']"
+        statusFilterKey="status"
+        [actions]="actions"
+        (rowClick)="onRowClick($event)"
+        (actionClick)="onActionClick($event)">
+      </app-advanced-data-table>
+    </div>
+
+  </div>
+</ion-content>

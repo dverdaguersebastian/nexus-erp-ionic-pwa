@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Auditoría NoSQL en Tiempo Real</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="audit-content" [fullscreen]="true">
+  <div class="audit-wrapper" role="main" id="main-content">
+    
+    <div class="section-bar">
+      <div>
+        <h1 class="page-title">Feed de Eventos y Telemetría Documental</h1>
+        <p class="page-subtitle">Simulación de servicio en tiempo real Firestore/NoSQL con emisión continua reactiva.</p>
+      </div>
+
+      <div class="simulation-actions">
+        <button type="button" class="btn-action pulse" (click)="triggerSimulatedSaleEvent()">
+          + Simular Venta en Vivo
+        </button>
+        <button type="button" class="btn-action warning" (click)="triggerManualSecurityAlert()">
+          ⚠ Alerta de Seguridad
+        </button>
+      </div>
+    </div>
+
+    <!-- Barra de Telemetría NoSQL en Vivo -->
+    <div class="telemetry-bar" *ngIf="telemetry()">
+      <div class="tele-item">
+        <span class="tele-label">Usuarios Conectados</span>
+        <span class="tele-val">{{ telemetry()?.activeUsersCount }}</span>
+      </div>
+      <div class="tele-item">
+        <span class="tele-label">Rendimiento</span>
+        <span class="tele-val">{{ telemetry()?.transactionsPerSecond }} ops/s</span>
+      </div>
+      <div class="tele-item">
+        <span class="tele-label">Carga de Servidor</span>
+        <span class="tele-val">{{ telemetry()?.serverLoadPercentage }}%</span>
+      </div>
+      <div class="tele-item">
+        <span class="tele-label">Estado Clúster NoSQL</span>
+        <span class="tele-badge">{{ telemetry()?.databaseStatus }}</span>
+      </div>
+    </div>
+
+    <!-- Timeline de Documentos en Tiempo Real -->
+    <div class="events-feed" role="feed" aria-label="Flujo de auditoría en tiempo real">
+      <article
+        *ngFor="let doc of auditLogs()"
+        class="event-card"
+        [class.border-critical]="doc.event.severity === 'CRITICAL'"
+        [class.border-warning]="doc.event.severity === 'WARNING'"
+        tabindex="0"
+        [attr.aria-label]="doc.event.action + ' por ' + doc.actor.userName">
+        
+        <div class="event-meta">
+          <span class="event-time">{{ doc.timestamp | date:'HH:mm:ss - dd/MM/yyyy' }}</span>
+          <ion-badge [color]="getSeverityColor(doc.event.severity)">
+            {{ doc.event.severity }}
+          </ion-badge>
+          <span class="event-action-tag">{{ doc.event.action }} // {{ doc.event.entity }}</span>
+        </div>
+
+        <div class="event-body">
+          <p class="event-desc">{{ doc.event.description }}</p>
+          <div class="event-actor-info">
+            <span>Operador: <strong>{{ doc.actor.userName }}</strong> ({{ doc.actor.role }})</span>
+            <span *ngIf="doc.actor.ipAddress">IP: <code>{{ doc.actor.ipAddress }}</code></span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+  </div>
+</ion-content>

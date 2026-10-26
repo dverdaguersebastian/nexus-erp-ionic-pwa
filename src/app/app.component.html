@@ -1,0 +1,114 @@
+<ion-app>
+  <!-- Anunciador dinámico para lectores de pantalla WCAG -->
+  <div class="sr-only" aria-live="polite" aria-atomic="true">
+    {{ a11yService.liveAnnouncement() }}
+  </div>
+
+  <ion-split-pane contentId="main-content">
+    <!-- Menú Lateral Accesible y Responsivo -->
+    <ion-menu contentId="main-content" type="overlay" role="navigation" aria-label="Menú de Navegación Principal">
+      <ion-header>
+        <ion-toolbar color="primary">
+          <ion-title>
+            <div class="brand-branding">
+              <span class="brand-logo" aria-hidden="true">🌐</span>
+              <strong>NexusERP Pro</strong>
+            </div>
+          </ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="menu-content">
+        <!-- Tarjeta de Perfil de Usuario Actual -->
+        <div class="user-status-card" *ngIf="authService.isAuthenticated()">
+          <div class="avatar-circle">
+            {{ authService.currentUser()?.name?.charAt(0) || 'U' }}
+          </div>
+          <div class="user-details">
+            <span class="user-name">{{ authService.currentUser()?.name }}</span>
+            <span class="user-role" [class.admin-role]="authService.isAdmin()">
+              {{ authService.isAdmin() ? 'Administrador' : 'Usuario Estándar' }}
+            </span>
+          </div>
+        </div>
+
+        <div class="guest-card" *ngIf="!authService.isAuthenticated()">
+          <p>Sesión no iniciada</p>
+          <a routerLink="/login" class="login-link">Iniciar Sesión &rarr;</a>
+        </div>
+
+        <!-- Lista de Vistas de Navegación -->
+        <ion-list id="inbox-list" lines="none">
+          <ng-container *ngFor="let p of appPages">
+            <ion-menu-toggle auto-hide="false" *ngIf="isPageVisible(p)">
+              <ion-item
+                [routerLink]="[p.url]"
+                routerDirection="root"
+                routerLinkActive="selected"
+                detail="false"
+                class="menu-nav-item">
+                <span class="menu-nav-icon" aria-hidden="true" slot="start">{{ p.icon }}</span>
+                <ion-label>{{ p.title }}</ion-label>
+                <ion-badge *ngIf="p.badge" [color]="p.badge === 'Admin' ? 'danger' : 'success'" slot="end">
+                  {{ p.badge }}
+                </ion-badge>
+              </ion-item>
+            </ion-menu-toggle>
+          </ng-container>
+        </ion-list>
+
+        <!-- Controles de Accesibilidad Universal (WCAG 2.1 AA/AAA) -->
+        <div class="a11y-panel" role="region" aria-label="Controles de Accesibilidad">
+          <span class="a11y-header">Herramientas de Accesibilidad</span>
+          
+          <button
+            type="button"
+            class="a11y-btn"
+            [class.active]="a11yService.isHighContrast()"
+            (click)="toggleHighContrast()"
+            aria-label="Conmutar modo de alto contraste para baja visión">
+            🌓 Alto Contraste (AAA)
+          </button>
+
+          <div class="font-scale-controls">
+            <span class="font-scale-label">Tamaño Fuente:</span>
+            <div class="font-buttons">
+              <button
+                type="button"
+                [class.active]="a11yService.currentFontScale() === 'normal'"
+                (click)="changeFontScale('normal')"
+                aria-label="Tamaño de texto estándar">
+                A
+              </button>
+              <button
+                type="button"
+                [class.active]="a11yService.currentFontScale() === 'large'"
+                (click)="changeFontScale('large')"
+                aria-label="Tamaño de texto aumentado 20%">
+                A+
+              </button>
+              <button
+                type="button"
+                [class.active]="a11yService.currentFontScale() === 'extra-large'"
+                (click)="changeFontScale('extra-large')"
+                aria-label="Tamaño de texto aumentado 40%">
+                A++
+              </button>
+            </div>
+          </div>
+        </div>
+      </ion-content>
+
+      <ion-footer *ngIf="authService.isAuthenticated()">
+        <ion-toolbar class="logout-toolbar">
+          <button type="button" class="btn-logout" (click)="logout()">
+            🔒 Cerrar Sesión Segura
+          </button>
+        </ion-toolbar>
+      </ion-footer>
+    </ion-menu>
+
+    <!-- Salida de Enrutamiento Principal con Lazy Loading -->
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>

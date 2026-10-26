@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="danger">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Acceso Restringido (403)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="unauth-content" [fullscreen]="true">
+  <div class="unauth-wrapper" role="main" id="main-content">
+    <div class="unauth-card" role="alert">
+      <div class="icon-circle" aria-hidden="true">🛡</div>
+      <h1 class="error-code">403 Prohibido</h1>
+      <h2>Privilegios Insuficientes</h2>
+      <p class="error-desc">
+        La ruta a la que intentas acceder está protegida por <code>roleGuard</code> y requiere privilegios exclusivos de <strong>Administrador</strong>. Tu cuenta actual dispone de rol <strong>Usuario Estándar</strong>.
+      </p>
+
+      <div class="action-buttons">
+        <a routerLink="/employees" class="btn-primary">Volver a Empleados (Ruta Permitida)</a>
+        <button type="button" class="btn-secondary" (click)="logoutAndSwitch()">
+          Iniciar Sesión como Administrador
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>

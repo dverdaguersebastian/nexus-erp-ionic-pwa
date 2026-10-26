@@ -1,0 +1,129 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cuadro de Mando Ejecutivo (Dashboard)</ion-title>
+    <ion-buttons slot="end">
+      <div class="user-pill desktop-only">
+        <span>Admin: {{ authService.currentUser()?.name }}</span>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="dashboard-content" [fullscreen]="true">
+  <div class="dashboard-wrapper" role="main" id="main-content">
+    
+    <!-- Barra Superior de Acciones Rápidas y Exportación -->
+    <div class="dashboard-header-bar">
+      <div>
+        <h1 class="page-title">Métricas y Analítica Empresarial</h1>
+        <p class="page-subtitle">Consumo asíncrono concurrente de fuentes SQL Relacional y telemetría NoSQL en tiempo real.</p>
+      </div>
+
+      <div class="quick-export-group">
+        <button type="button" class="btn-export pdf" (click)="exportCurrentPdf()" aria-label="Descargar informe consolidado en PDF">
+          📄 Descargar Informe PDF
+        </button>
+        <button type="button" class="btn-export csv" (click)="exportCurrentCsv()" aria-label="Descargar datos tabulados en CSV">
+          📊 Exportar a CSV
+        </button>
+      </div>
+    </div>
+
+    <!-- Spinner de Carga Inicial Asíncrona (forkJoin) -->
+    <div *ngIf="isLoading()" class="loading-state" role="status" aria-live="polite">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+      <p>Orquestando carga concurrente de bases de datos (SQL & NoSQL)...</p>
+    </div>
+
+    <div *ngIf="!isLoading()">
+      <!-- Grid de 4 Widgets de Estadísticas KPI Reutilizables (RA 3) -->
+      <section class="kpi-grid" role="region" aria-label="Indicadores Clave de Rendimiento">
+        <app-stat-widget
+          title="Facturación Acumulada"
+          [value]="totalRevenueAccumulated"
+          [trendPercentage]="14.8"
+          trendPeriod="vs semestre anterior"
+          iconSymbol="💶"
+          accentColor="primary">
+        </app-stat-widget>
+
+        <app-stat-widget
+          title="Plantilla de Empleados"
+          [value]="totalEmployeesCount"
+          [trendPercentage]="8.5"
+          trendPeriod="nuevas incorporaciones"
+          iconSymbol="👥"
+          accentColor="success">
+        </app-stat-widget>
+
+        <app-stat-widget
+          title="Margen Operativo Neto"
+          [value]="averageMargin"
+          [trendPercentage]="3.2"
+          trendPeriod="eficiencia EBITDA"
+          iconSymbol="📈"
+          accentColor="warning">
+        </app-stat-widget>
+
+        <app-stat-widget
+          title="Telemetría NoSQL en Vivo"
+          [value]="telemetry()?.transactionsPerSecond + ' tx/s'"
+          [trendPercentage]="5.4"
+          subtitle="Estado: HEALTHY (Tiempo Real)"
+          iconSymbol="⚡"
+          accentColor="secondary">
+        </app-stat-widget>
+      </section>
+
+      <!-- Panel de Control de Filtros Interactivos en Tiempo Real (RA 5) -->
+      <section class="charts-controls-panel" role="region" aria-label="Controles de filtrado de gráficos">
+        <div class="panel-left">
+          <label for="period-filter" class="filter-label">Rango Temporal de Análisis:</label>
+          <select
+            id="period-filter"
+            class="filter-select"
+            [value]="selectedFilterPeriod()"
+            (change)="onPeriodFilterChange($event)">
+            <option value="ALL">Todo el Histórico (Últimos 6 Meses)</option>
+            <option value="SEMESTER">Semestre Reciente</option>
+            <option value="LAST3">Último Trimestre (3 Meses)</option>
+          </select>
+        </div>
+
+        <div class="panel-right">
+          <span class="live-pulse" aria-hidden="true"></span>
+          <span class="live-label">Stream NoSQL: Conectado a Firestore Real-time</span>
+        </div>
+      </section>
+
+      <!-- Sección de Gráficos Analíticos Chart.js -->
+      <div class="charts-grid">
+        <!-- Gráfico 1: Facturación vs Gastos vs Objetivos -->
+        <article class="chart-card main-chart" role="region" aria-label="Gráfico de Evolución de Facturación y Gastos">
+          <div class="card-head">
+            <h3>Evolución de Facturación, Costes y Objetivos</h3>
+            <span class="badge-source">Fuente: PostgreSQL (SQL Relacional)</span>
+          </div>
+          <div class="canvas-container">
+            <canvas #salesChartCanvas></canvas>
+          </div>
+        </article>
+
+        <!-- Gráfico 2: Presupuesto por Departamento -->
+        <article class="chart-card side-chart" role="region" aria-label="Gráfico de Distribución Presupuestaria">
+          <div class="card-head">
+            <h3>Distribución de Presupuesto Departamental</h3>
+            <span class="badge-source">Fuente: Centros de Coste</span>
+          </div>
+          <div class="canvas-container doughnut">
+            <canvas #deptChartCanvas></canvas>
+          </div>
+        </article>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

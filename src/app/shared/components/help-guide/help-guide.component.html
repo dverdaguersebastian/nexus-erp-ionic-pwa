@@ -1,0 +1,48 @@
+<div class="help-guide-container" role="region" aria-label="Manual de Usuario y Centro de Ayuda">
+  <div class="guide-sidebar">
+    <div class="sidebar-header">
+      <h3>Temas de Ayuda</h3>
+    </div>
+    <ul class="topic-list" role="tablist">
+      <li
+        *ngFor="let topic of topics"
+        role="presentation"
+        [class.active]="selectedTopicId() === topic.id">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="selectedTopicId() === topic.id"
+          (click)="selectTopic(topic.id)"
+          class="topic-button">
+          <span class="topic-badge">{{ topic.badge }}</span>
+          <strong class="topic-title">{{ topic.title }}</strong>
+          <span class="topic-summary">{{ topic.summary }}</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <article class="guide-content" role="tabpanel" [attr.aria-label]="currentTopic.title">
+    <header class="content-header">
+      <span class="category-badge">{{ currentTopic.category }}</span>
+      <h2>{{ currentTopic.title }}</h2>
+    </header>
+    <div class="content-body" [innerHTML]="currentTopic.content"></div>
+
+    <div class="credentials-callout" *ngIf="currentTopic.id === 'auth-roles'">
+      <h4>Credenciales de Prueba Preconfiguradas:</h4>
+      <div class="cred-grid">
+        <div class="cred-card admin-card">
+          <strong>Rol Administrador</strong>
+          <code>admin&#64;empresa.com</code> / <code>admin123</code>
+          <small>Acceso completo: Dashboard, CRUD empleados, exportación informes</small>
+        </div>
+        <div class="cred-card user-card">
+          <strong>Rol Usuario Estándar</strong>
+          <code>empleado&#64;empresa.com</code> / <code>user123</code>
+          <small>Acceso restringido: Vista clientes, perfil, ayuda contextual</small>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>

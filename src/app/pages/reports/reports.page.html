@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Centro de Informes & Exportación</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="reports-content" [fullscreen]="true">
+  <div class="reports-wrapper" role="main" id="main-content">
+    <div class="section-bar">
+      <div>
+        <h1 class="page-title">Generación de Informes Oficiales (PDF & CSV)</h1>
+        <p class="page-subtitle">Exportación de datos estructurados para auditorías, fiscalidad y análisis corporativo (RA 5).</p>
+      </div>
+    </div>
+
+    <ion-toast
+      [isOpen]="!!toastMessage()"
+      [message]="toastMessage() || ''"
+      [duration]="3000"
+      (didDismiss)="toastMessage.set(null)"
+      position="bottom"
+      color="success">
+    </ion-toast>
+
+    <div class="reports-cards-grid">
+      <!-- Tarjeta 1: Informe PDF Corporativo -->
+      <article class="report-card" role="region" aria-label="Generador de Informes PDF">
+        <div class="card-badge pdf-badge">Formato PDF Vectorial</div>
+        <h2>Plantilla y Distribución Salarial</h2>
+        <p>Genera un informe apaisado (Landscape A4) con maquetación ejecutiva, métricas agregadas (salario medio, total masa salarial) y tabla paginada con jsPDF.</p>
+        
+        <div class="form-field">
+          <label for="pdf-custom-title" class="field-label">Título Personalizado del Encabezado:</label>
+          <input
+            id="pdf-custom-title"
+            type="text"
+            class="field-input"
+            [value]="customTitle()"
+            (input)="customTitle.set($any($event.target).value)"
+          />
+        </div>
+
+        <button type="button" class="btn-generate pdf" (click)="exportEmployeesPdf()">
+          📥 Descargar Informe Oficial en PDF
+        </button>
+      </article>
+
+      <!-- Tarjeta 2: Exportación CSV Empleados -->
+      <article class="report-card" role="region" aria-label="Exportador CSV Empleados">
+        <div class="card-badge csv-badge">Formato CSV / Hoja de Cálculo</div>
+        <h2>Exportación Tabulada de Empleados</h2>
+        <p>Descarga directa del conjunto completo de empleados en formato CSV estandarizado (RFC 4180) con prefijo UTF-8 BOM para compatibilidad con Microsoft Excel.</p>
+        
+        <button type="button" class="btn-generate csv" (click)="exportEmployeesCsv()">
+          📥 Exportar Base de Empleados a CSV
+        </button>
+      </article>
+
+      <!-- Tarjeta 3: Exportación CSV Clientes CRM -->
+      <article class="report-card" role="region" aria-label="Exportador CSV Clientes">
+        <div class="card-badge csv-badge">Formato CSV / Hoja de Cálculo</div>
+        <h2>Cartera Comercial de Clientes</h2>
+        <p>Informe detallado de cuentas comerciales, contactos directos, ciudades de facturación y volumen económico transaccionado.</p>
+        
+        <button type="button" class="btn-generate csv" (click)="exportClientsCsv()">
+          📥 Exportar Cartera CRM a CSV
+        </button>
+      </article>
+    </div>
+  </div>
+</ion-content>
