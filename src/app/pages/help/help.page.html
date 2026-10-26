@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Manual de Usuario & Ayuda</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="help-content" [fullscreen]="true">
+  <div class="help-wrapper" role="main" id="main-content">
+    <div class="section-bar">
+      <h1 class="page-title">Centro de Asistencia & Manual de Usuario Embebido</h1>
+      <p class="page-subtitle">Guía de arquitectura, manual de operación por roles y especificaciones técnicas (RA 6).</p>
+    </div>
+
+    <!-- Componente Reutilizable de Ayuda Embebida -->
+    <app-help-guide></app-help-guide>
+  </div>
+</ion-content>

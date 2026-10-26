@@ -14,7 +14,7 @@ import { Department, Employee, Client, SalesMonthlyMetric, DepartmentDistributio
 export class SqlApiService {
   // Tablas relacionales en memoria
   private departments: Department[] = [
-    { id: 1, code: 'DEP-DIR', name: 'Dirección General & Estrategia', budget: 450000, headCount: 4, managerName: 'Daniel Verdaguer' },
+    { id: 1, code: 'DEP-DIR', name: 'Dirección General & Estrategia', budget: 450000, headCount: 4, managerName: 'Diego Verdaguer' },
     { id: 2, code: 'DEP-ENG', name: 'Ingeniería de Software & Cloud', budget: 780000, headCount: 12, managerName: 'Elena Martínez' },
     { id: 3, code: 'DEP-FIN', name: 'Finanzas, Tesorería & Auditoría', budget: 320000, headCount: 5, managerName: 'Carlos Santillana' },
     { id: 4, code: 'DEP-MKT', name: 'Marketing & Adquisición B2B', budget: 280000, headCount: 6, managerName: 'Lucía Benítez' },
@@ -22,7 +22,7 @@ export class SqlApiService {
   ];
 
   private employees: Employee[] = [
-    { id: 101, code: 'EMP-001', firstName: 'Daniel', lastName: 'Verdaguer Sebastián', email: 'admin@empresa.com', departmentId: 1, departmentName: 'Dirección General & Estrategia', position: 'Chief Technology Officer', salary: 75000, status: 'ACTIVO', hireDate: '2023-01-15' },
+    { id: 101, code: 'EMP-001', firstName: 'Diego', lastName: 'Verdaguer Sebastián', email: 'admin@empresa.com', departmentId: 1, departmentName: 'Dirección General & Estrategia', position: 'Chief Technology Officer', salary: 75000, status: 'ACTIVO', hireDate: '2023-01-15' },
     { id: 102, code: 'EMP-002', firstName: 'Elena', lastName: 'Martínez López', email: 'empleado@empresa.com', departmentId: 2, departmentName: 'Ingeniería de Software & Cloud', position: 'Lead Software Architect', salary: 58000, status: 'ACTIVO', hireDate: '2023-03-20' },
     { id: 103, code: 'EMP-003', firstName: 'Carlos', lastName: 'Santillana Mora', email: 'carlos.santillana@empresa.com', departmentId: 3, departmentName: 'Finanzas, Tesorería & Auditoría', position: 'Senior Financial Analyst', salary: 46000, status: 'ACTIVO', hireDate: '2023-06-10' },
     { id: 104, code: 'EMP-004', firstName: 'Lucía', lastName: 'Benítez Ortega', email: 'lucia.benitez@empresa.com', departmentId: 4, departmentName: 'Marketing & Adquisición B2B', position: 'Growth Marketing Director', salary: 49000, status: 'EN_VACACIONES', hireDate: '2023-09-01' },

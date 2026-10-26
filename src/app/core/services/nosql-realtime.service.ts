@@ -16,14 +16,14 @@ export class NoSqlRealtimeService implements OnDestroy {
       id: 'doc_log_101',
       collection: 'audit_logs',
       timestamp: new Date(Date.now() - 15 * 60000).toISOString(),
-      actor: { userId: 'USR-001', userName: 'Daniel Verdaguer', role: 'admin', ipAddress: '192.168.1.45' },
+      actor: { userId: 'USR-001', userName: 'Diego Verdaguer', role: 'admin', ipAddress: '192.168.1.45' },
       event: { action: 'LOGIN', entity: 'SECURITY', description: 'Inicio de sesión con credenciales de Administrador y generación de token JWT.', severity: 'INFO' }
     },
     {
       id: 'doc_log_102',
       collection: 'audit_logs',
       timestamp: new Date(Date.now() - 11 * 60000).toISOString(),
-      actor: { userId: 'USR-001', userName: 'Daniel Verdaguer', role: 'admin', ipAddress: '192.168.1.45' },
+      actor: { userId: 'USR-001', userName: 'Diego Verdaguer', role: 'admin', ipAddress: '192.168.1.45' },
       event: { action: 'UPDATE', entity: 'FINANCE', entityId: 'DEP-ENG', description: 'Ajuste presupuestario aprobado para el departamento de Ingeniería de Software (+12%).', severity: 'INFO' }
     },
     {

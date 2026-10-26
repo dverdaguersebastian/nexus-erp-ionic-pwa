@@ -31,7 +31,7 @@ export class ReportService {
     });
 
     const title = config?.title || 'NexusERP Pro - Informe Oficial de Plantilla de Empleados';
-    const author = config?.author || 'Daniel Verdaguer Sebastián';
+    const author = config?.author || 'Diego Verdaguer Sebastián';
     const now = new Date().toLocaleString('es-ES');
 
     // Cabecera Corporativa

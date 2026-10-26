@@ -2,7 +2,7 @@
   "name": "nexus-erp-ionic-pwa",
   "version": "1.0.0",
   "description": "Sistema de Gestión Multiplataforma Empresarial (PWA/Híbrida) con Ionic 9, Angular 22 y RxJS",
-  "author": "Daniel Verdaguer Sebastián",
+  "author": "Diego Verdaguer Sebastián",
   "private": true,
   "scripts": {
     "ng": "ng",

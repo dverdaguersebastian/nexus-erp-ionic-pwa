@@ -26,7 +26,7 @@ export class AuthService {
   private readonly defaultUsers: Array<User & { passwordHash: string }> = [
     {
       id: 'USR-001',
-      name: 'Daniel Verdaguer Sebastián',
+      name: 'Diego Verdaguer Sebastián',
       email: 'admin@empresa.com',
       role: 'admin',
       department: 'Dirección General & IT',

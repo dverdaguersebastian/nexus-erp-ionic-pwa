@@ -2,7 +2,7 @@
 
 **Módulo Profesional:** Desarrollo de Interfaces (Código: 0488)  
 **Ciclo Formativo:** Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)  
-**Autor:** Daniel Verdaguer Sebastián  
+**Autor:** Diego Verdaguer Sebastián  
 **Centro:** Universidad Nebrija  
 **Tecnologías:** Ionic Framework 9, Angular 22 (Standalone), TypeScript 6, Chart.js, jsPDF, RxJS  
 **URL de Producción:** [https://nexus-erp-ionic-pwa.vercel.app](https://nexus-erp-ionic-pwa.vercel.app)  
