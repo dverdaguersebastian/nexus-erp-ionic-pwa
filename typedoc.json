@@ -1,0 +1,23 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/main.ts",
+    "src/app/core/models/user.model.ts",
+    "src/app/core/models/relational.model.ts",
+    "src/app/core/models/nosql.model.ts",
+    "src/app/core/services/auth.service.ts",
+    "src/app/core/services/sql-api.service.ts",
+    "src/app/core/services/nosql-realtime.service.ts",
+    "src/app/core/services/report.service.ts",
+    "src/app/core/guards/auth.guard.ts",
+    "src/app/core/guards/role.guard.ts",
+    "src/app/shared/components/advanced-data-table/advanced-data-table.component.ts",
+    "src/app/shared/components/stat-widget/stat-widget.component.ts"
+  ],
+  "out": "docs",
+  "name": "NexusERP Pro - Documentación Técnica de Arquitectura",
+  "readme": "README.md",
+  "excludePrivate": false,
+  "excludeProtected": false,
+  "includeVersion": true
+}

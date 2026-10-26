@@ -1,0 +1,52 @@
+{
+  "name": "nexus-erp-ionic-pwa",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión Multiplataforma Empresarial (PWA/Híbrida) con Ionic 9, Angular 22 y RxJS",
+  "author": "Daniel Verdaguer Sebastián",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --host 0.0.0.0 --port 8100",
+    "build": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "test": "vitest run",
+    "lint": "ng lint",
+    "docs": "typedoc --entryPoints src/main.ts --out docs --plugin none",
+    "audit:lighthouse": "npx lighthouse http://localhost:8100 --output html,json --output-path ./reports/lighthouse-report --chrome-flags=\"--headless\""
+  },
+  "dependencies": {
+    "@angular/common": "22.2.3",
+    "@angular/compiler": "22.2.3",
+    "@angular/core": "22.2.3",
+    "@angular/forms": "22.2.3",
+    "@angular/platform-browser": "22.2.3",
+    "@angular/router": "22.2.3",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/haptics": "8.0.2",
+    "@capacitor/keyboard": "8.0.6",
+    "@capacitor/status-bar": "8.0.4",
+    "@ionic/angular": "^9.0.0",
+    "chart.js": "^4.4.7",
+    "ionicons": "^8.1.0",
+    "jspdf": "^2.5.2",
+    "jspdf-autotable": "^3.8.4",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "22.2.3",
+    "@angular/cli": "22.2.3",
+    "@angular/compiler-cli": "22.2.3",
+    "@angular/language-service": "22.2.3",
+    "@capacitor/cli": "8.5.3",
+    "@ionic/angular-toolkit": "^13.0.0",
+    "angular-eslint": "22.6.0",
+    "eslint": "^10.10.0",
+    "jsdom": "^30.1.1",
+    "typedoc": "^0.26.11",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "~5.0.5"
+  }
+}
