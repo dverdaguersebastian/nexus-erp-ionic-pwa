@@ -1,0 +1,85 @@
+<ion-content class="login-page-content" [fullscreen]="true">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="brand-header">
+        <div class="brand-badge">PWA Multiplataforma</div>
+        <h1 class="brand-title">NexusERP Pro</h1>
+        <p class="brand-subtitle">Módulo Profesional de Desarrollo de Interfaces (0488)</p>
+      </div>
+
+      <!-- Atajos de credenciales para el profesor / evaluador -->
+      <div class="evaluator-box" role="region" aria-label="Credenciales rápidas para el evaluador">
+        <span class="evaluator-title">Acceso Rápido de Evaluación:</span>
+        <div class="evaluator-buttons">
+          <button type="button" class="btn-quick admin" (click)="fillCredentials('admin')">
+            Cargar Administrador (admin&#64;empresa.com)
+          </button>
+          <button type="button" class="btn-quick user" (click)="fillCredentials('user')">
+            Cargar Usuario Estándar (empleado&#64;empresa.com)
+          </button>
+        </div>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="nexus-form" novalidate>
+        <div *ngIf="errorMessage()" class="validation-message error" role="alert" aria-live="assertive">
+          <span>{{ errorMessage() }}</span>
+        </div>
+
+        <!-- Correo Electrónico -->
+        <div class="form-group">
+          <label for="login-email" class="form-label">Correo Electrónico Corporativo</label>
+          <input
+            id="login-email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            placeholder="ejemplo@empresa.com"
+            autocomplete="email"
+            aria-required="true"
+            [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+          />
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="validation-message error" role="alert">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">El correo electrónico es obligatorio.</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Introduzca un formato de correo corporativo válido.</span>
+          </div>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-group">
+          <label for="login-password" class="form-label">Contraseña</label>
+          <input
+            id="login-password"
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="••••••••"
+            autocomplete="current-password"
+            aria-required="true"
+            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+          />
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="validation-message error" role="alert">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es obligatoria.</span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 6 caracteres.</span>
+          </div>
+        </div>
+
+        <!-- Botón de Envío -->
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="isLoading() || loginForm.invalid"
+          aria-label="Iniciar Sesión en NexusERP">
+          <span *ngIf="!isLoading()">Acceder al Sistema &rarr;</span>
+          <span *ngIf="isLoading()" class="loading-spinner-row">
+            <ion-spinner name="crescent"></ion-spinner>
+            Verificando credenciales...
+          </span>
+        </button>
+
+        <div class="form-footer">
+          <p>¿Nuevo empleado o usuario? <a routerLink="/register">Dar de alta cuenta con validación asíncrona</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

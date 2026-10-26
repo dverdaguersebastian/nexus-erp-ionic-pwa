@@ -1,0 +1,155 @@
+<ion-content class="register-page-content" [fullscreen]="true">
+  <div class="register-wrapper">
+    <div class="register-card">
+      <div class="register-header">
+        <h2>Alta de Nuevo Usuario / Empleado</h2>
+        <p>Formulario Reactivo con Validación Asíncrona en Tiempo Real</p>
+      </div>
+
+      <div *ngIf="submitSuccess()" class="validation-message success" role="alert">
+        <span>¡Registro completado con éxito! Redirigiendo al sistema...</span>
+      </div>
+
+      <div *ngIf="submitError()" class="validation-message error" role="alert">
+        <span>{{ submitError() }}</span>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form" novalidate>
+        <!-- Nombre Completo -->
+        <div class="form-group">
+          <label for="reg-name" class="form-label">Nombre y Apellidos *</label>
+          <input
+            id="reg-name"
+            type="text"
+            class="form-control"
+            formControlName="name"
+            placeholder="Ej. Carmen Ortiz Gómez"
+            aria-required="true"
+          />
+          <div *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="validation-message error">
+            <span *ngIf="registerForm.get('name')?.errors?.['required']">El nombre completo es obligatorio.</span>
+            <span *ngIf="registerForm.get('name')?.errors?.['minlength']">Debe contener al menos 3 caracteres.</span>
+          </div>
+        </div>
+
+        <!-- Correo Electrónico con Validación Asíncrona -->
+        <div class="form-group">
+          <label for="reg-email" class="form-label">
+            Correo Corporativo *
+            <span class="sub-label">(Validado asíncronamente contra el servidor)</span>
+          </label>
+          <div class="input-with-status">
+            <input
+              id="reg-email"
+              type="email"
+              class="form-control"
+              formControlName="email"
+              placeholder="usuario@empresa.com"
+              aria-required="true"
+            />
+            <span *ngIf="isEmailPending" class="status-spinner" aria-label="Comprobando disponibilidad">
+              <ion-spinner name="dots"></ion-spinner>
+            </span>
+          </div>
+
+          <!-- Estados reactivos de validación -->
+          <div *ngIf="isEmailPending" class="validation-message checking">
+            <span>Comprobando disponibilidad del correo en la base de datos...</span>
+          </div>
+          <div *ngIf="isEmailValid" class="validation-message success">
+            <span>&#10003; Correo disponible para asignación.</span>
+          </div>
+          <div *ngIf="registerForm.get('email')?.errors?.['emailTaken'] && !isEmailPending" class="validation-message error">
+            <span>&#10007; Este correo ya se encuentra registrado por otro usuario (Pruebe con otro).</span>
+          </div>
+          <div *ngIf="registerForm.get('email')?.errors?.['required'] && registerForm.get('email')?.touched" class="validation-message error">
+            <span>El correo electrónico es obligatorio.</span>
+          </div>
+        </div>
+
+        <!-- Código de Empleado con Validación Asíncrona -->
+        <div class="form-group">
+          <label for="reg-code" class="form-label">
+            Código Identificador de Empleado *
+            <span class="sub-label">(Formato: EMP-XXX, ej. EMP-099)</span>
+          </label>
+          <div class="input-with-status">
+            <input
+              id="reg-code"
+              type="text"
+              class="form-control"
+              formControlName="employeeCode"
+              placeholder="EMP-099"
+              aria-required="true"
+            />
+            <span *ngIf="isCodePending" class="status-spinner">
+              <ion-spinner name="dots"></ion-spinner>
+            </span>
+          </div>
+
+          <div *ngIf="isCodePending" class="validation-message checking">
+            <span>Validando unicidad del código de empleado...</span>
+          </div>
+          <div *ngIf="isCodeValid" class="validation-message success">
+            <span>&#10003; Código disponible.</span>
+          </div>
+          <div *ngIf="registerForm.get('employeeCode')?.errors?.['codeTaken'] && !isCodePending" class="validation-message error">
+            <span>&#10007; El código ya existe en el cuadrante de personal (EMP-001 a 003 reservados).</span>
+          </div>
+          <div *ngIf="registerForm.get('employeeCode')?.errors?.['pattern'] && registerForm.get('employeeCode')?.touched" class="validation-message error">
+            <span>Debe cumplir el formato obligatorio EMP-XXX (ejemplo: EMP-045).</span>
+          </div>
+        </div>
+
+        <!-- Departamento -->
+        <div class="form-group">
+          <label for="reg-dept" class="form-label">Departamento Asignado *</label>
+          <select id="reg-dept" class="form-control" formControlName="department">
+            <option value="Dirección General & Estrategia">Dirección General & Estrategia</option>
+            <option value="Ingeniería de Software & Cloud">Ingeniería de Software & Cloud</option>
+            <option value="Finanzas, Tesorería & Auditoría">Finanzas, Tesorería & Auditoría</option>
+            <option value="Marketing & Adquisición B2B">Marketing & Adquisición B2B</option>
+            <option value="Recursos Humanos & Cultura">Recursos Humanos & Cultura</option>
+          </select>
+        </div>
+
+        <!-- Rol del Usuario -->
+        <div class="form-group">
+          <label for="reg-role" class="form-label">Rol de Acceso en el Sistema *</label>
+          <select id="reg-role" class="form-control" formControlName="role">
+            <option value="user">Usuario Estándar (Acceso operativo básico)</option>
+            <option value="admin">Administrador (Acceso total al Cuadro de Mando)</option>
+          </select>
+        </div>
+
+        <!-- Contraseña -->
+        <div class="form-group">
+          <label for="reg-pass" class="form-label">Contraseña de Acceso *</label>
+          <input
+            id="reg-pass"
+            type="password"
+            class="form-control"
+            formControlName="password"
+            placeholder="Mínimo 6 caracteres"
+          />
+          <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="validation-message error">
+            <span>La contraseña debe contener al menos 6 caracteres.</span>
+          </div>
+        </div>
+
+        <!-- Botón de Envío -->
+        <button
+          type="submit"
+          class="btn-submit"
+          [disabled]="isSubmitting() || registerForm.invalid || registerForm.pending">
+          <span *ngIf="!isSubmitting()">Confirmar Alta de Registro</span>
+          <span *ngIf="isSubmitting()">Procesando alta...</span>
+        </button>
+
+        <div class="form-footer">
+          <p>¿Ya dispones de credenciales? <a routerLink="/login">Volver a la pantalla de inicio de sesión</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
