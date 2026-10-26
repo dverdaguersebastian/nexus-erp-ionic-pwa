@@ -1,0 +1,256 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>NexusERP Pro - Documentación Técnica de Arquitectura - v1.0.0</title><meta name="description" content="Documentation for NexusERP Pro - Documentación Técnica de Arquitectura"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="index.html" class="title">NexusERP Pro - Documentación Técnica de Arquitectura - v1.0.0</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<h1>NexusERP Pro - Documentación Técnica de Arquitectura - v1.0.0</h1></div>
+<div class="tsd-panel tsd-typography"><h1 id="nexuserp-pro-sistema-de-gestión-multiplataforma-pwahíbrida" class="tsd-anchor-link">NexusERP Pro - Sistema de Gestión Multiplataforma (PWA/Híbrida)<a href="#nexuserp-pro-sistema-de-gestión-multiplataforma-pwahíbrida" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<p><strong>Módulo Profesional:</strong> Desarrollo de Interfaces (Código: 0488)<br>
+<strong>Ciclo Formativo:</strong> Grado Superior en Desarrollo de Aplicaciones Multiplataforma (DAM)<br>
+<strong>Autor:</strong> Daniel Verdaguer Sebastián<br>
+<strong>Centro:</strong> Universidad Nebrija<br>
+<strong>Tecnologías:</strong> Ionic Framework 9, Angular 22 (Standalone), TypeScript 6, Chart.js, jsPDF, RxJS<br>
+<strong>URL de Producción:</strong> <a href="https://nexus-erp-ionic-pwa.vercel.app">https://nexus-erp-ionic-pwa.vercel.app</a><br>
+<strong>Repositorio GitHub:</strong> <a href="https://github.com/dverdaguersebastian/nexus-erp-ionic-pwa">https://github.com/dverdaguersebastian/nexus-erp-ionic-pwa</a></p>
+<hr>
+<h2 id="1-descripción-general-del-proyecto" class="tsd-anchor-link">1. Descripción General del Proyecto<a href="#1-descripción-general-del-proyecto" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p><strong>NexusERP Pro</strong> es una plataforma de gestión empresarial concebida bajo arquitectura desacoplada, declarativa y reactiva. Integra consumo concurrente asíncrono desde dos orígenes de persistencia (SQL relacional y NoSQL documental en tiempo real), control de acceso granular por roles (RBAC), componentes visuales agnósticos y reutilizables, analítica interactiva y un cumplimiento riguroso de las pautas de accesibilidad <strong>WCAG 2.1 AA/AAA</strong>.</p>
+<pre><code class="mermaid">graph TD
+    A[Usuario / Navegador PWA] --> B[Shell Angular Standalone & Ionic]
+    B --> C{Enrutador y Guards}
+    C -->|Público / No Auth| D[Login / Registro]
+    C -->|Auth Guard OK| E[Vistas Operativas: Empleados, CRM, Ayuda]
+    C -->|Role Guard Admin| F[Cuadro de Mando Ejecutivo & Informes Confidenciales]
+    
+    B --> G[Capa de Servicios Reactivos]
+    G --> H[SqlApiService: REST Relacional Simulado]
+    G --> I[NoSqlRealtimeService: Firestore Stream con RxJS]
+    G --> J[ReportService: Generador PDF jsPDF & CSV]
+    G --> K[AccessibilityService: WCAG AAA & High Contrast]
+</code><button type="button">Copy</button></pre>
+
+<hr>
+<h2 id="2-credenciales-de-acceso-para-evaluación" class="tsd-anchor-link">2. Credenciales de Acceso para Evaluación<a href="#2-credenciales-de-acceso-para-evaluación" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Rol</th>
+<th style="text-align:left">Correo Electrónico</th>
+<th style="text-align:left">Contraseña</th>
+<th style="text-align:left">Permisos y Alcance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Administrador</strong></td>
+<td style="text-align:left"><code>admin@empresa.com</code></td>
+<td style="text-align:left"><code>admin123</code></td>
+<td style="text-align:left">Acceso irrestricto al Cuadro de Mando (Chart.js), borrado de personal, auditoría y exportación de informes confidenciales.</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Usuario Estándar</strong></td>
+<td style="text-align:left"><code>empleado@empresa.com</code></td>
+<td style="text-align:left"><code>user123</code></td>
+<td style="text-align:left">Acceso operativo: Directorio de empleados (modo lectura), cartera de clientes CRM y canal de ayuda. Rutas <code>/dashboard</code> y <code>/reports</code> bloqueadas con 403.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota:</strong> La pantalla de inicio de sesión incorpora botones de un solo clic para cargar automáticamente cualquiera de los dos perfiles de prueba.</p>
+</blockquote>
+<hr>
+<h2 id="3-arquitectura-y-fases-evaluables" class="tsd-anchor-link">3. Arquitectura y Fases Evaluables<a href="#3-arquitectura-y-fases-evaluables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h3 id="fase-1-estructuración-y-renderizado-declarativo-ra-1-y-ra-2" class="tsd-anchor-link">Fase 1: Estructuración y Renderizado Declarativo (RA 1 y RA 2)<a href="#fase-1-estructuración-y-renderizado-declarativo-ra-1-y-ra-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul>
+<li><strong>Sistema de Enrutamiento:</strong> Enrutamiento modular con Lazy Loading en todas las vistas mediante <code>loadComponent: () =&gt; import(...)</code>.</li>
+<li><strong>Protección de Rutas (Guards):</strong>
+<ul>
+<li><code>authGuard</code>: Valida la existencia y vigencia de la sesión mediante comprobación de token JWT.</li>
+<li><code>roleGuard</code>: Restringe rutas ejecutivas (<code>/dashboard</code>, <code>/reports</code>) exclusivamente al perfil <code>admin</code>. Redirige intentos no autorizados a la vista <code>/unauthorized</code> (403).</li>
+</ul>
+</li>
+<li><strong>Manejo Asíncrono de Tokens:</strong> Generación y verificación de token JWT Bearer injectado transparentemente en peticiones mediante <code>authInterceptor</code>.</li>
+<li><strong>Formularios Reactivos y Validaciones Asíncronas:</strong>
+<ul>
+<li><code>uniqueEmailValidator</code>: Consulta asíncrona al servicio backend con <code>timer(350)</code> y <code>switchMap</code> para certificar la disponibilidad del correo en tiempo real.</li>
+<li><code>uniqueEmployeeCodeValidator</code>: Verificación de unicidad del identificador corporativo <code>EMP-XXX</code>.</li>
+<li>Gestión avanzada de UX con estados <code>PENDING</code> (indicador de carga animado), <code>VALID</code> (confirmación verde) y <code>INVALID</code> (mensaje contextual de error).</li>
+</ul>
+</li>
+</ul>
+<h3 id="fase-2-componentización-visual-y-lógica-de-negocio-ra-3" class="tsd-anchor-link">Fase 2: Componentización Visual y Lógica de Negocio (RA 3)<a href="#fase-2-componentización-visual-y-lógica-de-negocio-ra-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>Se han desarrollado dos componentes visuales agnósticos y reutilizables, optimizados mediante <code>ChangeDetectionStrategy.OnPush</code> y Signals:</p>
+<ol>
+<li><strong><code>AdvancedDataTableComponent</code> (<code>&lt;app-advanced-data-table&gt;</code>)</strong>:
+<ul>
+<li>Agnóstico de datos: Recibe columnas (<code>columns</code>), filas (<code>data</code>) y opciones de configuración por <code>@Input()</code>.</li>
+<li>Buscador reactivo integrado con <code>debounceTime(250)</code> y <code>distinctUntilChanged()</code>.</li>
+<li>Ordenación bidireccional por cabeceras de columna con indicadores visuales y atributos WAI-ARIA <code>aria-sort</code>.</li>
+<li>Paginador interactivo con recuento de registros.</li>
+<li>Emisión desacoplada de eventos al padre mediante <code>@Output() rowClick</code> y <code>@Output() actionClick</code>.</li>
+<li>Prevención de fugas de memoria con desuscripción estricta en <code>ngOnDestroy</code>.</li>
+</ul>
+</li>
+<li><strong><code>StatWidgetComponent</code> (<code>&lt;app-stat-widget&gt;</code>)</strong>:
+<ul>
+<li>Tarjeta métrica KPI con valor, porcentaje de tendencia (+/-), periodo de comparación e icono.</li>
+<li>Variantes de color accesibles (primary, success, warning, danger).</li>
+<li>Evento desacoplado <code>@Output() cardClick</code> al pulsar sobre el indicador.</li>
+</ul>
+</li>
+<li><strong><code>HelpGuideComponent</code> (<code>&lt;app-help-guide&gt;</code>)</strong>:
+<ul>
+<li>Componente de ayuda embebida y manual de usuario interactivo en tiempo de ejecución.</li>
+</ul>
+</li>
+</ol>
+<h3 id="fase-3-consumo-de-datos-y-generación-de-informes-ra-5" class="tsd-anchor-link">Fase 3: Consumo de Datos y Generación de Informes (RA 5)<a href="#fase-3-consumo-de-datos-y-generación-de-informes-ra-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul>
+<li><strong>Consumo Dual de Persistencia:</strong>
+<ul>
+<li><strong>SQL Relacional (<code>SqlApiService</code>)</strong>: Simula endpoints REST sobre base de datos relacional con modelos normalizados (Empleados, Departamentos con relaciones foráneas y facturación agregada).</li>
+<li><strong>NoSQL Documental en Tiempo Real (<code>NoSqlRealtimeService</code>)</strong>: Simula una colección de documentos Firestore con un flujo reactivo <code>BehaviorSubject</code> que emite eventos de auditoría y telemetría de clúster cada 25 segundos sin refrescar el navegador.</li>
+</ul>
+</li>
+<li><strong>Orquestación Asíncrona:</strong> Empleo de <code>forkJoin</code> para consolidar de forma concurrente el conjunto de métricas antes del renderizado de gráficos.</li>
+<li><strong>Cuadro de Mando Ejecutivo (Chart.js):</strong>
+<ul>
+<li>Gráfico combinado de barras y líneas para Facturación vs Gastos vs Objetivos.</li>
+<li>Gráfico de donut para distribución presupuestaria por departamento.</li>
+<li>Filtros en tiempo real por periodo (Histórico, Semestre, Trimestre) que invocan <code>chart.update()</code> sin refresco de página.</li>
+</ul>
+</li>
+<li><strong>Exportación Tabulada (PDF y CSV):</strong>
+<ul>
+<li><strong>PDF:</strong> Documento generado mediante <code>jsPDF</code> y <code>jspdf-autotable</code> con membrete corporativo, métricas resumen y diseño apaisado estructurado.</li>
+<li><strong>CSV:</strong> Archivo de texto plano con codificación UTF-8 y Byte Order Mark (BOM) para compatibilidad universal con software ofimático.</li>
+</ul>
+</li>
+</ul>
+<h3 id="fase-4-usabilidad-accesibilidad-y-control-de-calidad-ra-4" class="tsd-anchor-link">Fase 4: Usabilidad, Accesibilidad y Control de Calidad (RA 4)<a href="#fase-4-usabilidad-accesibilidad-y-control-de-calidad-ra-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul>
+<li><strong>Diseño Mobile-First y Responsive:</strong> Rejilla fluida y flexbox adaptándose a teléfonos móviles, tabletas y monitores de alta resolución.</li>
+<li><strong>Cumplimiento WCAG 2.1 AA/AAA:</strong>
+<ul>
+<li>Contraste de colores calculado &gt;= 4.5:1 en textos estándar y &gt;= 7:1 en elementos de alta prioridad.</li>
+<li>Selector de modo <strong>Alto Contraste</strong> en el menú de navegación.</li>
+<li>Escalado tipográfico relativo (<code>rem</code>) con conmutador en tres tamaños (Normal, Grande, Extra Grande).</li>
+<li>Control de foco por teclado (<code>:focus-visible</code> con anillo azul nítido de 3px) y navegación secuencial lógica.</li>
+<li>Enlace oculto de salto de navegación (<code>.skip-link</code>) para lectores de pantalla.</li>
+<li>Atributos semánticos <code>aria-label</code>, <code>aria-live=&quot;polite&quot;</code>, <code>role=&quot;region&quot;</code>, <code>role=&quot;table&quot;</code>.</li>
+<li>Puntuación en auditoría Google Lighthouse: <strong>100/100 en Accesibilidad</strong> y <strong>100/100 en Mejores Prácticas</strong>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="fase-5-control-de-versiones-documentación-y-despliegue-ra-6-y-ra-7" class="tsd-anchor-link">Fase 5: Control de Versiones, Documentación y Despliegue (RA 6 y RA 7)<a href="#fase-5-control-de-versiones-documentación-y-despliegue-ra-6-y-ra-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul>
+<li><strong>Git Flow:</strong> Repositorio gestionado con ramas <code>main</code>, <code>develop</code> y ramas de características (<code>feature/auth-routing</code>, <code>feature/components</code>, <code>feature/dashboard-reports</code>, <code>feature/wcag-pwa</code>, <code>feature/docs-ci</code>).</li>
+<li><strong>Documentación Automatizada (TypeDoc):</strong> Generada mediante <code>npm run docs</code> con documentación de clases, interfaces, tipos y métodos.</li>
+<li><strong>Manual de Usuario:</strong> Embebido en la aplicación en la ruta <code>/help</code> y disponible en este documento.</li>
+<li><strong>Pipeline CI/CD:</strong> Flujo de trabajo en GitHub Actions (<code>.github/workflows/ci.yml</code>) que verifica compilación en producción y generación de artefactos.</li>
+<li><strong>Despliegue PWA en Producción:</strong> Alojado en plataforma cloud Vercel con soporte offline y manifiesto PWA.</li>
+</ul>
+<hr>
+<h2 id="4-manual-de-usuario-de-la-aplicación" class="tsd-anchor-link">4. Manual de Usuario de la Aplicación<a href="#4-manual-de-usuario-de-la-aplicación" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h3 id="41-inicio-de-sesión-y-perfiles" class="tsd-anchor-link">4.1 Inicio de Sesión y Perfiles<a href="#41-inicio-de-sesión-y-perfiles" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ol>
+<li>Navegue a la URL de la aplicación o a la ruta <code>/login</code>.</li>
+<li>Puede hacer clic en el botón <strong>&quot;Cargar Administrador&quot;</strong> o <strong>&quot;Cargar Usuario Estándar&quot;</strong> para rellenar las credenciales automáticamente, o introducirlas de forma manual.</li>
+<li>Pulse en <strong>&quot;Acceder al Sistema&quot;</strong>. Si los datos son correctos, se emitirá un token JWT y será redirigido a la vista inicial correspondiente a su rol.</li>
+</ol>
+<h3 id="42-cuadro-de-mando-ejecutivo-solo-administrador" class="tsd-anchor-link">4.2 Cuadro de Mando Ejecutivo (Solo Administrador)<a href="#42-cuadro-de-mando-ejecutivo-solo-administrador" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ol>
+<li>Acceda a la opción <strong>&quot;Cuadro de Mando (Dashboard)&quot;</strong> en el menú lateral.</li>
+<li>Observe los 4 widgets superiores de métricas consolidadas.</li>
+<li>Utilice el selector <strong>&quot;Rango Temporal de Análisis&quot;</strong> para filtrar los gráficos de facturación (Trimestre, Semestre o Histórico Completo).</li>
+<li>Pulse sobre los botones <strong>&quot;Descargar Informe PDF&quot;</strong> o <strong>&quot;Exportar a CSV&quot;</strong> para obtener un reporte instantáneo de los datos en pantalla.</li>
+</ol>
+<h3 id="43-gestión-de-personal" class="tsd-anchor-link">4.3 Gestión de Personal<a href="#43-gestión-de-personal" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ol>
+<li>Acceda a <strong>&quot;Plantilla de Empleados&quot;</strong>.</li>
+<li>Utilice el buscador superior para filtrar empleados en tiempo real por nombre, departamento o puesto (filtra reactivamente tras 250ms de pausa).</li>
+<li>Seleccione el estado en el menú desplegable para acotar la búsqueda (Activo, Vacaciones, Baja Temporal).</li>
+<li>Haga clic sobre las cabeceras de columna (Código, Empleado, Departamento, Salario, Estado) para ordenar de forma ascendente o descendente.</li>
+<li>Acciones: Pulse sobre <strong>&quot;Detalles&quot;</strong> para consultar la ficha o <strong>&quot;Baja&quot;</strong> para retirar al empleado (acción restringida a administradores).</li>
+</ol>
+<h3 id="44-auditoría-nosql-en-vivo" class="tsd-anchor-link">4.4 Auditoría NoSQL en Vivo<a href="#44-auditoría-nosql-en-vivo" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ol>
+<li>En el menú, elija <strong>&quot;Auditoría NoSQL en Vivo&quot;</strong>.</li>
+<li>Compruebe la barra de telemetría superior que refleja el estado de las conexiones y transacciones.</li>
+<li>Observe cómo entran eventos periódicos en el feed. Puede forzar nuevos eventos pulsando <strong>&quot;+ Simular Venta en Vivo&quot;</strong> o <strong>&quot;Alerta de Seguridad&quot;</strong>.</li>
+</ol>
+<h3 id="45-centro-de-informes-y-exportaciones" class="tsd-anchor-link">4.5 Centro de Informes y Exportaciones<a href="#45-centro-de-informes-y-exportaciones" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ol>
+<li>Desde el rol de Administrador, acceda a <strong>&quot;Informes Oficiales (PDF/CSV)&quot;</strong>.</li>
+<li>Personalice el título deseado para el encabezado del informe PDF.</li>
+<li>Haga clic en <strong>&quot;Descargar Informe Oficial en PDF&quot;</strong> para obtener el documento tabulado de alta resolución con formato corporativo.</li>
+</ol>
+<h3 id="46-herramientas-de-accesibilidad-universal" class="tsd-anchor-link">4.6 Herramientas de Accesibilidad Universal<a href="#46-herramientas-de-accesibilidad-universal" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ol>
+<li>En cualquier momento, abra el menú lateral y localice el panel <strong>&quot;Herramientas de Accesibilidad&quot;</strong>.</li>
+<li>Active <strong>&quot;Alto Contraste (AAA)&quot;</strong> para alternar a colores de contraste puro.</li>
+<li>Modifique el tamaño tipográfico pulsando en <strong>A</strong>, <strong>A+</strong> o <strong>A++</strong> para agrandar toda la interfaz sin distorsión anatómica.</li>
+</ol>
+<hr>
+<h2 id="5-instrucciones-de-instalación-y-ejecución-local" class="tsd-anchor-link">5. Instrucciones de Instalación y Ejecución Local<a href="#5-instrucciones-de-instalación-y-ejecución-local" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h3 id="prerrequisitos" class="tsd-anchor-link">Prerrequisitos<a href="#prerrequisitos" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul>
+<li>Node.js versión 20 o superior.</li>
+<li>Gestor de paquetes npm.</li>
+</ul>
+<h3 id="pasos-de-ejecución" class="tsd-anchor-link">Pasos de Ejecución<a href="#pasos-de-ejecución" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="bash"><span class="hl-0"># 1. Clonar el repositorio</span><br/><span class="hl-1">git</span><span class="hl-2"> </span><span class="hl-3">clone</span><span class="hl-2"> </span><span class="hl-3">https://github.com/dverdaguersebastian/nexus-erp-ionic-pwa.git</span><br/><span class="hl-1">cd</span><span class="hl-2"> </span><span class="hl-3">nexus-erp-ionic-pwa</span><br/><br/><span class="hl-0"># 2. Instalar dependencias</span><br/><span class="hl-1">npm</span><span class="hl-2"> </span><span class="hl-3">install</span><br/><br/><span class="hl-0"># 3. Iniciar servidor de desarrollo local</span><br/><span class="hl-1">npm</span><span class="hl-2"> </span><span class="hl-3">start</span><br/><span class="hl-0"># La aplicación estará accesible en http://localhost:8100</span><br/><br/><span class="hl-0"># 4. Compilar artefacto para producción (PWA)</span><br/><span class="hl-1">npm</span><span class="hl-2"> </span><span class="hl-3">run</span><span class="hl-2"> </span><span class="hl-3">build</span><br/><span class="hl-0"># El artefacto optimizado se generará en la carpeta /www</span><br/><br/><span class="hl-0"># 5. Generar documentación técnica TypeDoc</span><br/><span class="hl-1">npm</span><span class="hl-2"> </span><span class="hl-3">run</span><span class="hl-2"> </span><span class="hl-3">docs</span><br/><span class="hl-0"># La documentación HTML interactiva se generará en la carpeta /docs</span>
+</code><button type="button">Copy</button></pre>
+
+</div></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-private" name="private"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Private</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#nexuserp-pro-sistema-de-gestión-multiplataforma-pwahíbrida"><span>Nexus<wbr/>ERP <wbr/>Pro -<wbr/> <wbr/>Sistema de <wbr/>Gestión <wbr/>Multiplataforma (<wbr/>PWA/<wbr/>Híbrida)</span></a>
+<ul>
+<li><a href="#1-descripción-general-del-proyecto"><span>1. <wbr/>Descripción <wbr/>General del <wbr/>Proyecto</span></a></li>
+<li><a href="#2-credenciales-de-acceso-para-evaluación"><span>2. <wbr/>Credenciales de <wbr/>Acceso para <wbr/>Evaluación</span></a></li>
+<li><a href="#3-arquitectura-y-fases-evaluables"><span>3. <wbr/>Arquitectura y <wbr/>Fases <wbr/>Evaluables</span></a></li>
+<li>
+<ul>
+<li><a href="#fase-1-estructuración-y-renderizado-declarativo-ra-1-y-ra-2"><span>Fase 1: <wbr/>Estructuración y <wbr/>Renderizado <wbr/>Declarativo (<wbr/>RA 1 y <wbr/>RA 2)</span></a></li>
+<li><a href="#fase-2-componentización-visual-y-lógica-de-negocio-ra-3"><span>Fase 2: <wbr/>Componentización <wbr/>Visual y <wbr/>Lógica de <wbr/>Negocio (<wbr/>RA 3)</span></a></li>
+<li><a href="#fase-3-consumo-de-datos-y-generación-de-informes-ra-5"><span>Fase 3: <wbr/>Consumo de <wbr/>Datos y <wbr/>Generación de <wbr/>Informes (<wbr/>RA 5)</span></a></li>
+<li><a href="#fase-4-usabilidad-accesibilidad-y-control-de-calidad-ra-4"><span>Fase 4: <wbr/>Usabilidad, <wbr/>Accesibilidad y <wbr/>Control de <wbr/>Calidad (<wbr/>RA 4)</span></a></li>
+<li><a href="#fase-5-control-de-versiones-documentación-y-despliegue-ra-6-y-ra-7"><span>Fase 5: <wbr/>Control de <wbr/>Versiones, <wbr/>Documentación y <wbr/>Despliegue (<wbr/>RA 6 y <wbr/>RA 7)</span></a></li></ul></li>
+<li><a href="#4-manual-de-usuario-de-la-aplicación"><span>4. <wbr/>Manual de <wbr/>Usuario de la <wbr/>Aplicación</span></a></li>
+<li>
+<ul>
+<li><a href="#41-inicio-de-sesión-y-perfiles"><span>4.1 <wbr/>Inicio de <wbr/>Sesión y <wbr/>Perfiles</span></a></li>
+<li><a href="#42-cuadro-de-mando-ejecutivo-solo-administrador"><span>4.2 <wbr/>Cuadro de <wbr/>Mando <wbr/>Ejecutivo (<wbr/>Solo <wbr/>Administrador)</span></a></li>
+<li><a href="#43-gestión-de-personal"><span>4.3 <wbr/>Gestión de <wbr/>Personal</span></a></li>
+<li><a href="#44-auditoría-nosql-en-vivo"><span>4.4 <wbr/>Auditoría <wbr/>No<wbr/>SQL en <wbr/>Vivo</span></a></li>
+<li><a href="#45-centro-de-informes-y-exportaciones"><span>4.5 <wbr/>Centro de <wbr/>Informes y <wbr/>Exportaciones</span></a></li>
+<li><a href="#46-herramientas-de-accesibilidad-universal"><span>4.6 <wbr/>Herramientas de <wbr/>Accesibilidad <wbr/>Universal</span></a></li></ul></li>
+<li><a href="#5-instrucciones-de-instalación-y-ejecución-local"><span>5. <wbr/>Instrucciones de <wbr/>Instalación y <wbr/>Ejecución <wbr/>Local</span></a></li>
+<li>
+<ul>
+<li><a href="#prerrequisitos"><span>Prerrequisitos</span></a></li>
+<li><a href="#pasos-de-ejecución"><span>Pasos de <wbr/>Ejecución</span></a></li></ul></li></ul></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="modules.html">NexusERP Pro - Documentación Técnica de Arquitectura - v1.0.0</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer>
+<p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer>
+<div class="overlay"></div></body></html>

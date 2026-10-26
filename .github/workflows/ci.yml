@@ -1,0 +1,38 @@
+name: NexusERP Pro CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop, 'feature/**' ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-verify:
+    name: Build, TypeDoc & Quality Gate (RA 6 & RA 7)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del Repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Instalar Dependencias del Proyecto
+        run: npm ci
+
+      - name: Verificación de Tipos y Compilación Producción (PWA)
+        run: npm run build
+
+      - name: Generación Automatizada de Documentación Técnica (TypeDoc)
+        run: npm run docs
+
+      - name: Validar Existencia de Artefacto www y Documentación
+        run: |
+          test -d www || (echo "Error: Artefacto www de producción no generado" && exit 1)
+          test -d docs || (echo "Error: Carpeta de documentación docs no generada" && exit 1)
+          echo "Pipeline CI/CD ejecutado satisfactoriamente con todos los checks superados."
